@@ -4,4 +4,4 @@ Aqui tiene un listado de los archivos que contiene este proyecto con enlaces par
 
 - [2. Proyecto 2 Python](https://github.com/Robinsoncano372/proyecto-2-algoritmos-Robinson-David-Cano-Mendez/blob/main/proyecto2_python.py)
 
-- [5. Documentación Externa de los programas](https://github.com/Robinsoncano372/proyecto-2-algoritmos-Robinson-David-Cano-Mendez/blob/main/documentacion_externa.md)
+- [3. Documentación Externa de los programas](https://github.com/Robinsoncano372/proyecto-2-algoritmos-Robinson-David-Cano-Mendez/blob/main/documentacion_externa.md)
