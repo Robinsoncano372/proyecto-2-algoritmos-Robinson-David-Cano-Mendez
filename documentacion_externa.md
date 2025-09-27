@@ -29,7 +29,7 @@ Para este proyecto vamos a remarcar toda la información del programa y todos lo
 
 
 # MANUAL DE USUARIO
-Ahora se explicara como funciona el programa y como debe usarse correctamente aplicando esto en los 3 idionas
+Ahora se explicara como funciona el programa y como debe usarse correctamente aplicando esto en los 2 idionas con sus respectivos codigos, basandome en el de c++ para los siguientes ejemplos
 
 - El programa sobre los arreglos inicia con un menu donde debemos elegir 8 de las opciones para que el programa las opere, se usa un `Switch` para que se pueda escoger por medio del numero que indica la opcion.
 1. suma de matrices
@@ -44,7 +44,7 @@ Ahora se explicara como funciona el programa y como debe usarse correctamente ap
 El programa usa una función `Do - While` que permite que el proceso de el menú se repita a menos que seleccione la opción salir. Debe ingresar uno de los 8 números dependiendo la acción que quiera hacer, si escoge un numero que no sea uno de esos 8, el programa lo tomara como un dato erroneo y te volvera a aparecer el menú.
 
 ## Importante
-En todas las opciones que se usan las matrices, te pedira las dimensiones de las matrices (lineas,columnas) que vas a operar, y te preguntara si deseas llenar las matrices con numeros aleatorios gracias a los codigos de numeros aleatorios siendo `srand(time(NULL))` y `rand() % 10` o si deseas tambien llenar las matrices manualmente colocando los numeros en las lineas y columnas de tu eleccion, con esto dicho veamos las opciones.
+En todas las opciones que se usan las matrices, te pedira las dimensiones de las matrices (lineas,columnas) que vas a operar colocando un numero para que cada una tome ese valor, y te preguntara si deseas llenar las matrices con numeros aleatorios gracias a los codigos de numeros aleatorios siendo `srand(time(NULL))` y `rand() % 10` o si deseas tambien llenar las matrices manualmente colocando los numeros en las lineas y columnas de tu eleccion, con esto dicho veamos las opciones.
 
 ### 1. Suma de matrices
 - Si selecciona la opción 1 se solicitara al usuario llenar 2 matrices las cuales se sumaran para crear una tercer matriz con los resultados de dichas sumas, si sumamos esta matriz:
@@ -105,14 +105,176 @@ $$
 \end{array}
 $$
 
+Esto se logra gracias al intercambio de las filas y columnas por medio de un `for` como el siguiente:
+
+
+            for (int i = 0; i < rows1; i++)
+                for (int j = 0; j < columns1; j++)
+                    matrixr[i][j] = matrixa[j][i];
+
+### 3. Multiplicación de matrices
+
+Para realizar la multiplicación de matrices lo primero que debemos verificar es que ambas matrices sean compatibles, para ello el número de las columnas de la primer matriz debe coincidir con el numero de filas de la segunda matriz, cono se ve en la condicion:
+
+
+            if (columns1 != rows2)
+            {
+                cout << "No se pueden multiplicar las matrices" << endl;
+                break;
+            }
+
+Si no se cumple con esa condicion las matrices procederan a multiplicarse entre las filas de la primer matriz y las columnas de la segunda matriz, dandonos un resultado como el siguiente:
+
+Primer matriz:
+$$
+\begin{array}{cc}
+8 & 3 \\
+8 & 0
+\end{array}
+$$
+
+Segunda matriz: 
+
+$$
+\begin{array}{cc}
+2 & 5 \\
+3 & 4
+\end{array}
+$$
+
+Respuesta:
+
+$$
+\begin{array}{cc}
+25 & 52 \\
+16 & 40
+\end{array}
+$$
+
+Esto se logra gracias a la estructura siguiente:
+
+
+            for (int i = 0; i < rows1; i++)
+                for (int j = 0; j < columns2; j++)
+                {
+                    matrixr[i][j] = 0;
+                    //Realizando la multiplicacion de las matrices
+                    for (int k = 0; k < columns1; k++)
+                        matrixr[i][j] += matrixa[i][k] * matrixb[k][j];
+                }
+
+
+### 4. Buscar numero en la matriz
+El usuario despues de crear la matriz, el programa le pedira ingresar el numero que desea buscar en la matriz, al ingresarlo si el numero se encuentra en la matriz el programa indicara que fue encontrado y mostrara cuantas veces aparece el numero en dicha matriz, por ejemplo:
+
+$$
+\begin{array}{cc}
+4 & 7 \\
+3 & 4
+\end{array}
+$$
+
+Si buscamos el 4 aqui, el programa nos dira "El numero 4 se encontro 2 veces" pero si buscamos 5 nos dira "El numero no se encontro" todo se verifica por medio de este for:
+
+
+    for (int i = 0; i < rows1; i++)
+                for (int j = 0; j < columns1; j++)
+                    if (matrixa[i][j] == num)
+                        count++;
+
+El contador aumenta cuando el numero que buscamos se encuentra en la matriz.
+
+### 5. Contar palabras en cadena
+Esta vez el usuario debe ingresar una cadena el cual pueden ser oraciones comunes y palabras consecutivas, lo que el programa hara sera contar todas las palabras usadas en la cadena y decirte la cantidad exacra, como ve en el siguiente ejemplo:
+
+
+    Cadena: Hola soy Robinson de Mariano Galvez
+    "La cadena tiene 6 palabras"
+
+Esto se logra usando los `for` de la siguiente forma:
+
+            for (int i = 0; i < cadena.length(); i++)
+            {
+                //contador de palabras
+                if (cadena[i] != ' ' && !dentropalabra)
+                {
+                    contador++;
+                    dentropalabra = true;
+                }
+                else if (cadena[i] == ' ')
+                {
+                    dentropalabra = false;
+                }
+            }
+
+Con este `for` hacemos el conteo y a la vez no contamos los espacios entre cada palabra
+
+### 6. Ordenar letras en cadena
+En este caso el usuario ingresara la cadena y el programa se encarga
+de ordenar todas las letras usadas en la cadena en orden alfabetico, como en el siguiente ejemplo: 
+
+Cadena: hola soy robinson de Mariano Galvez
+Las letras ordenadas alfabeticamente: GMaaaabdeehiillnnnooooorrssvyz
+
+Esto se logra gracias a el siguiente `for` el cual usa ordenamiento burbuja:
+
+            for (int i = 0; i < cadena.length() - 1; i++)
+            {
+                for (int j = i + 1; j < cadena.length(); j++)
+                {
+                    if (cadena[i] > cadena[j])
+                    {
+                        char temp = cadena[i];
+                        cadena[i] = cadena[j];
+                        cadena[j] = temp;
+                    }
+                }
+            }
+
+Va verificando las vocales si van antes o despues entre las letras asi quedando ordenado.
+
+
+### 7. Detectar sub cadenas
+Esto te pide una cadena y despues de crearla te pide buscar una subcadena refiriendose a una de las palabras que usaste en la cadena,por ejemlo:
+
+Cadena: Hola soy Robinson Cano
+Subcadena: Robinson
+
+Esto se logra gracias a la siguiente condicion:
+
+            if (cadena.find(subcadena) != string::npos)
+
+Si una parte de la cadena es igual a la subcadena que buscamos, nos indicara que se encontro la cadena.
+
+### 8. Verificar palindromo 
+Un palindromo es una palabra que leendo normal o en reversa dicen lo mismo, como ejemplo: Reconocer = reconoceR
+El programa te pedira ingresar una cadena y verificara si esta es palindromo o no con el siguiente `for`:
+
+            bool esPalindromo = true;
+            int n = limpia.length();
+            for (int i = 0; i < n / 2; i++)
+            {
+                if (limpia[i] != limpia[n - 1 - i])
+                {
+                    esPalindromo = false;
+                    break;
+                }
+            }
+
+A la vez esta este otro `for` que hace que se ignoren los espacios y que todas las letras sean minusculas:
+
+            string limpia = "";
+            for (int i = 0; i < cadena.length(); i++)
+            {
+                char c = cadena[i];
+                if (c != ' ')
+                {                            
+                    if (c >= 'A' && c <= 'Z') 
+                        c = c + ('a' - 'A');
+                    limpia += c;
+                }
+            }
 
 
 
-### 3. Salir
-
-
-
-
-
-
-# FIN
+ # FIN
